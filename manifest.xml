@@ -101,6 +101,6 @@
   <!-- meta-aws-biga-demo -->
   <remote fetch="https://github.com/aws4embeddedlinux/" name="demo-iot-automotive-embeddedlinux-image"/>
   <project name="meta-aws-iot-automotive-demo" remote="demo-iot-automotive-embeddedlinux-image" path="meta-aws-iot-automotive-demo" upstream="main" pushurl="https://github.com/aws4embeddedlinux/demo-iot-automotive-embeddedlinux-image.git" >
-    <linkfile dest="meta-layer" src="meta-aws-iot-automotive-demo"/>
+    <linkfile dest="meta-aws-iot-automotive-demo" src="meta-aws-iot-automotive-demo"/>
   </project>
 </manifest>
