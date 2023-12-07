@@ -25,7 +25,6 @@ const env = {
  */
 const defaultProps: cdk.StackProps = {
   tags: { PURPOSE: "META-AWS-BUILD" },
-  terminationProtection: false, // TODO: enable or remove.
   env,
 };
 

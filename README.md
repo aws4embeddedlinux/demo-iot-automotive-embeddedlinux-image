@@ -9,11 +9,11 @@ An AWS [Cloud Developer Toolkit](https://docs.aws.amazon.com/cdk/v2/guide/home.h
 ## Quickstart
 to create yocto demo build pipelines and cloud resources.
 
+change into cdk dir - all following steps from the README are performed there.
+```bash
+cd cdk
+```
 ### Setting Up
-
-Before we deploy the CDK we need to make sure the following cloudformation is deployed which will enable GG fleet provisioning:
-aws cloudformation create-stack --stack-name GGFleetProvisoning --template-body file://gg-bootstrap.yaml --capabilities CAPABILITY_NAMED_IAM
-
 #### install npm packages:
 
 ```bash
@@ -41,6 +41,11 @@ aws cloudformation describe-stacks --stack-name GGFleetProvisoning
 ```
 
 #### deploy cloud resources for all demo pipelines:
+
+> [!NOTE]
+> The used [library](https://github.com/aws4embeddedlinux/aws4embeddedlinux-ci) is tested against Node Versions 16, 18, and 20. If these versions are not available for your system, we recommend
+> using [NVM](https://github.com/nvm-sh/nvm) to install a compatible version
+
 ```bash
 # only required once
 cdk bootstrap
@@ -229,10 +234,49 @@ aws codecommit put-file \
 
 # Flashing the Device
 
+## NXP Goldbox
+
+In case of flashing the NXP GoldBox, once the pipeline is completed, we can simply go to the Artifacts S3 bucket and download the `sdcard` image. Once the download is complete, insert the SDCard into the computer and unmount any partitions in case they have been automounted.
+
+To identify the device name of the SD card you can do:
+
+```
+# Linux
+lsblk
+# Mac
+diskutil list
+```
+
+And to unmount:
+
+```
+# Linux
+sudo umount /dev/sdX1
+# Mac
+diskutil unmount /dev/diskXs1
+```
+
+Make sure to replace the `X` with the right block device.
+
+Now we can flash the device:
+> Please note that it is important to specify the right block device here, otherwise this can erase all of your data, so be careful.
+
+```
+sudo dd if=./core-image-minimal-s32g274ardb2.sdcard  of=/dev/diskX bs=1m && sync
+```
+
+Once completed, insert back the SD card into the GoldBox and reboot or power cycle the device. This will boot the device and we should be able to `ssh` into it if the host is in the same network:
+
+```
+ssh root@goldbox.local
+```
+
 After the successful build, we can go ahead and bootstrap a device.
-## EC2 Graviton AMI
+## EC2 Graviton AMI // debugging
+ Those steps are just necessary for debugging, or manually starting an EC2.
 
  In a scenario where we use an EC2 instance, we should be able to find the latest AMI that was created by the pipeline by doing:
+
 
 ```
 export AWS_REGION=$(aws configure get region)
@@ -291,42 +335,6 @@ Which we will need to `ssh` to the target:
 ssh -i biga.pem user@<public IP>
 ```
 
-## NXP Goldbox
-
-In case of flashing the NXP GoldBox, once the pipeline is completed, we can simply go to the Artifacts S3 bucket and download the `sdcard` image. Once the download is complete, insert the SDCard into the computer and unmount any partitions in case they have been automounted.
-
-To identify the device name of the SD card you can do:
-
-```
-# Linux
-lsblk
-# Mac
-diskutil list
-```
-
-And to unmount:
-
-```
-# Linux
-sudo umount /dev/sdX1
-# Mac
-diskutil unmount /dev/diskXs1
-```
-
-Make sure to replace the `X` with the right block device.
-
-Now we can flash the device:
-> Please note that it is important to specify the right block device here, otherwise this can erase all of your data, so be careful.
-
-```
-sudo dd if=./core-image-minimal-s32g274ardb2.sdcard  of=/dev/diskX bs=1m && sync
-```
-
-Once completed, insert back the SD card into the GoldBox and reboot or power cycle the device. This will boot the device and we should be able to `ssh` into it if the host is in the same network:
-
-```
-ssh root@goldbox.local
-```
 
 ### Testing the Device
 
@@ -352,10 +360,6 @@ Project Specific:
 -   `npm run zip-data` bundles the files for creating build host containers
 -   `npm run check` checks for lint and format issues
 -   `npm run docs` to generate documentation
-
-## Contributing
-
-TODO: Notes contribution process (pre-commit, running tests, formatting and test standards, etc)
 
 
 ## Security

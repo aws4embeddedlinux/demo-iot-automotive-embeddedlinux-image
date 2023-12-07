@@ -10,6 +10,8 @@ Build image
 ```bash
 repo init -u https://github.com/aws4embeddedlinux/demo-iot-automotive-embeddedlinux-image.git -m manifest.xml -b main
 
+repo sync
+
 source meta-agl/scripts/aglsetup.sh  -f -m biga-goldbox -b build-biga-goldbox
 
 bitbake aws-biga-image

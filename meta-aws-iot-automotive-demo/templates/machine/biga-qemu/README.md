@@ -5,6 +5,8 @@ run biga demo on qemu with virtual CAN support
 ```bash
 repo init -u https://github.com/aws4embeddedlinux/demo-iot-automotive-embeddedlinux-image.git -m manifest.xml -b main
 
+repo sync
+
 source meta-agl/scripts/aglsetup.sh  -f -m biga-qemu -b build-biga-qemu
 
 bitbake aws-biga-image
