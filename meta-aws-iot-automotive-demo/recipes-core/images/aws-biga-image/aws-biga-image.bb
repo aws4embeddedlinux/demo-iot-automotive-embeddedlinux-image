@@ -151,3 +151,10 @@ EXTRA_IMAGE_FEATURES += "debug-tweaks tools-debug"
 # other configuration is part of site.conf (see readme)
 GGV2_THING_NAME  = "vCar"
 GGV2_TES_RALIAS  = "GGTokenExchangeRoleAlias"
+
+
+IMAGE_INSTALL += "kmod"
+
+IMAGE_INSTALL += "socat"
+
+IMAGE_INSTALL += "netcat"

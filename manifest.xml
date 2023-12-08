@@ -98,7 +98,7 @@
   <remote fetch="https://github.com/aws4embeddedlinux/" name="aws"/>
   <project name="meta-aws" remote="aws" path="external/meta-aws" upstream="kirkstone" revision="a1aec268e6935a1bf7c7cae5166491551bdade5d" />
 
-  <!-- meta-aws-biga-demo -->
+  <!-- meta-aws-iot-automotive-demo -->
   <remote fetch="https://github.com/aws4embeddedlinux/" name="demo-iot-automotive-embeddedlinux-image"/>
   <project name="demo-iot-automotive-embeddedlinux-image" remote="demo-iot-automotive-embeddedlinux-image" path="demo-iot-automotive-embeddedlinux-image" upstream="main"  revision="main" pushurl="https://github.com/aws4embeddedlinux/demo-iot-automotive-embeddedlinux-image.git" >
     <linkfile dest="meta-aws-iot-automotive-demo" src="meta-aws-iot-automotive-demo"/>
