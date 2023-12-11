@@ -7,7 +7,6 @@ BBMASK += " \
         meta-agl/meta-agl-core/recipes-core/systemd/systemd_%.bbappend \
 "
 
-
 # ggc_user, ggc_group, user, users and groupds needs to added to meta-agl/meta-agl-core/files/passwd meta-agl/meta-agl-core/files/group when enabled
 USERADD_ERROR_DYNAMIC = "0"
 
@@ -29,20 +28,7 @@ PACKAGECONFIG:pn-greengrass-bin += "fleetprovisioning"
 # build and install vcan support
 KERNEL_FEATURES:append = " features/can/can.scc"
 
-IMAGE_INSTALL += "kernel-module-kvaser-pci"
-IMAGE_INSTALL += "kernel-module-c-can-platform"
-IMAGE_INSTALL += "kernel-module-can-dev"
-IMAGE_INSTALL += "kernel-module-c-can"
-IMAGE_INSTALL += "kernel-module-can-bcm"
-IMAGE_INSTALL += "kernel-module-can-gw"
-IMAGE_INSTALL += "kernel-module-can-raw"
-IMAGE_INSTALL += "kernel-module-vcan"
+# this needs to be done in local.conf
+KERNEL_MODULE_AUTOLOAD += "vcan"
 
-KERNEL_MODULE_AUTOLOAD += "kernel-module-kvaser-pci"
-KERNEL_MODULE_AUTOLOAD += "kernel-module-c-can-platform"
-KERNEL_MODULE_AUTOLOAD += "kernel-module-can-dev"
-KERNEL_MODULE_AUTOLOAD += "kernel-module-c-can"
-KERNEL_MODULE_AUTOLOAD += "kernel-module-can-bcm"
-KERNEL_MODULE_AUTOLOAD += "kernel-module-can-gw"
-KERNEL_MODULE_AUTOLOAD += "kernel-module-can-raw"
-KERNEL_MODULE_AUTOLOAD += "kernel-module-vcan"
+IMAGE_INSTALL += "vcan-ec2-multicast-receiver"

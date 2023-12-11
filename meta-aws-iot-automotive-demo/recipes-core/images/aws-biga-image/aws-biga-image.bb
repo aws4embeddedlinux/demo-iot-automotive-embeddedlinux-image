@@ -141,7 +141,6 @@ IMAGE_INSTALL  += "iproute2 canutils"
 
 IMAGE_INSTALL += "openssh-sshd"
 
-
 IMAGE_INSTALL  += "aws-iot-device-sdk-cpp-v2 python3-pyserial fmt python3-can aws-iot-device-sdk-python-v2"
 
 IMAGE_ROOTFS_EXTRA_SPACE = "1048576"
@@ -158,3 +157,13 @@ IMAGE_INSTALL += "kmod"
 IMAGE_INSTALL += "socat"
 
 IMAGE_INSTALL += "netcat"
+
+IMAGE_INSTALL += "curl"
+
+IMAGE_INSTALL += "kernel-module-vcan"
+
+# this needs to be done in local.conf
+# KERNEL_MODULE_AUTOLOAD += "vcan"
+
+# create vcan0 network interface
+IMAGE_INSTALL += "vcan0-netdev-config"

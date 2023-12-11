@@ -29,7 +29,11 @@ FILES:${PN} += " \
     ${bindir} \
     "
 
-RDEPENDS:${PN} += "bash kernel-module-vcan"
+RDEPENDS:${PN} += " \
+    bash \
+    curl \
+    kernel-module-vcan0 \
+    "
 
 SYSTEMD_AUTO_ENABLE = "enable"
 SYSTEMD_SERVICE:${PN} = "vcan-ec2-multicast-receiver.service"

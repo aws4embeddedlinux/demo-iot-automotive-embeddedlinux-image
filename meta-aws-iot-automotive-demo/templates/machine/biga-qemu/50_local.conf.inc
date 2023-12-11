@@ -30,15 +30,20 @@ IMAGE_INSTALL =+ "kernel-module-can-bcm"
 IMAGE_INSTALL =+ "kernel-module-can-gw"
 IMAGE_INSTALL =+ "kernel-module-can-raw"
 
-KERNEL_MODULE_AUTOLOAD =+ "kernel-module-kvaser-pci"
-KERNEL_MODULE_AUTOLOAD =+ "kernel-module-c-can-platform"
-KERNEL_MODULE_AUTOLOAD =+ "kernel-module-can-dev"
-KERNEL_MODULE_AUTOLOAD =+ "kernel-module-c-can"
-KERNEL_MODULE_AUTOLOAD =+ "kernel-module-can-bcm"
-KERNEL_MODULE_AUTOLOAD =+ "kernel-module-can-gw"
-KERNEL_MODULE_AUTOLOAD =+ "kernel-module-can-raw"
+KERNEL_MODULE_AUTOLOAD =+ "kvaser-pci"
+KERNEL_MODULE_AUTOLOAD =+ "c-can-platform"
+KERNEL_MODULE_AUTOLOAD =+ "can-dev"
+KERNEL_MODULE_AUTOLOAD =+ "c-can"
+KERNEL_MODULE_AUTOLOAD =+ "can-bcm"
+KERNEL_MODULE_AUTOLOAD =+ "can-gw"
+KERNEL_MODULE_AUTOLOAD =+ "can-raw"
 
 # GG needs more mem than default
 QB_MEM = "-m 2048"
 
 PACKAGECONFIG:pn-greengrass-bin += "fleetprovisioning"
+
+# this needs to be done in local.conf
+KERNEL_MODULE_AUTOLOAD += "vcan"
+
+IMAGE_INSTALL += "vcan-ec2-multicast-receiver"
