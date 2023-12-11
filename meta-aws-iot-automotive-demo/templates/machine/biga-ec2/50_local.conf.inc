@@ -32,3 +32,6 @@ KERNEL_FEATURES:append = " features/can/can.scc"
 KERNEL_MODULE_AUTOLOAD += "vcan"
 
 IMAGE_INSTALL += "vcan-ec2-multicast-receiver"
+
+# this line together with the systemd-serialgetty.bbappend will enable passwordless login via serial console
+IMAGE_FEATURES += "empty-root-password"
