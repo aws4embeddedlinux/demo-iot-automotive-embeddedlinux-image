@@ -28,6 +28,20 @@ PACKAGECONFIG:pn-greengrass-bin += "fleetprovisioning"
 # build and install vcan support
 KERNEL_FEATURES:append = " features/can/can.scc"
 
+IMAGE_INSTALL =+ "kernel-module-c-can-platform"
+IMAGE_INSTALL =+ "kernel-module-can-dev"
+IMAGE_INSTALL =+ "kernel-module-c-can"
+IMAGE_INSTALL =+ "kernel-module-can-bcm"
+IMAGE_INSTALL =+ "kernel-module-can-gw"
+IMAGE_INSTALL =+ "kernel-module-can-raw"
+
+KERNEL_MODULE_AUTOLOAD =+ "c-can-platform"
+KERNEL_MODULE_AUTOLOAD =+ "can-dev"
+KERNEL_MODULE_AUTOLOAD =+ "c-can"
+KERNEL_MODULE_AUTOLOAD =+ "can-bcm"
+KERNEL_MODULE_AUTOLOAD =+ "can-gw"
+KERNEL_MODULE_AUTOLOAD =+ "can-raw"
+
 # this needs to be done in local.conf
 KERNEL_MODULE_AUTOLOAD += "vcan"
 
