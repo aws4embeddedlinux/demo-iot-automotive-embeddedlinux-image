@@ -2,7 +2,7 @@ SUMMARY     = "Providing a ec2 multicast vcan receiver"
 LICENSE     = "MIT"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302"
 
-inherit systemd
+inherit systemd allarch
 
 SRC_URI = " \
     file://vcan-ec2-multicast-receiver.sh \
@@ -32,7 +32,7 @@ FILES:${PN} += " \
 RDEPENDS:${PN} += " \
     bash \
     curl \
-    kernel-module-vcan0 \
+    vcan0-netdev-config \
     "
 
 SYSTEMD_AUTO_ENABLE = "enable"
