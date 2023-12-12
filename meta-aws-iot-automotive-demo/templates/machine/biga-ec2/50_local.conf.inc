@@ -42,6 +42,9 @@ KERNEL_MODULE_AUTOLOAD =+ "can-bcm"
 KERNEL_MODULE_AUTOLOAD =+ "can-gw"
 KERNEL_MODULE_AUTOLOAD =+ "can-raw"
 
+# this vcan is only necessary for biga-ec2
+IMAGE_INSTALL += "kernel-module-vcan"
+
 # this needs to be done in local.conf
 KERNEL_MODULE_AUTOLOAD += "vcan"
 
