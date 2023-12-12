@@ -4,12 +4,6 @@ Parameters:
   ProvisioningTemplateName:
     Type: String
     Default: 'GreengrassFleetProvisioningTemplate'
-  GGTokenExchangeRoleName:
-    Type: String
-    Default: 'GGTokenExchangeRole'
-  GGFleetProvisioningRoleName:
-    Type: String
-    Default: 'GGFleetProvisioningRole'
   GGDeviceDefaultPolicyName:
     Type: String
     Default: 'GGDeviceDefaultIoTPolicy'
@@ -22,7 +16,7 @@ Resources:
   GGTokenExchangeRole:
     Type: AWS::IAM::Role
     Properties:
-      RoleName: !Ref GGTokenExchangeRoleName
+      RoleName: !Sub '${AWS::Region}-GGTokenExchangeRole'
       AssumeRolePolicyDocument:
         Version: '2012-10-17'
         Statement:
@@ -34,7 +28,7 @@ Resources:
               - 'sts:AssumeRole'
       Path: '/'
       Policies:
-        - PolicyName: !Sub ${GGTokenExchangeRoleName}Access
+        - PolicyName: !Sub 'GGTokenExchangeRoleNameAccess-${AWS::Region}'
           PolicyDocument:
             Version: "2012-10-17"
             Statement:
@@ -58,12 +52,13 @@ Resources:
     Type: AWS::IoT::RoleAlias
     Properties:
       RoleArn: !GetAtt GGTokenExchangeRole.Arn
-      RoleAlias: !Sub ${GGTokenExchangeRoleName}Alias
+      RoleAlias: !Sub 'GGTokenExchangeRoleNameAlias-${AWS::Region}'
 
   GGFleetProvisioningRole:
     Type: AWS::IAM::Role
     Properties:
-      RoleName: !Ref GGFleetProvisioningRoleName
+      RoleName: !Sub ${AWS::Region}-GGFleetProvisioningRole
+
       AssumeRolePolicyDocument:
         Version: '2012-10-17'
         Statement:
