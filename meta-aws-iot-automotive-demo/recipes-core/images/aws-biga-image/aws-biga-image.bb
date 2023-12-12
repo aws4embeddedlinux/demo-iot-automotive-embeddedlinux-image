@@ -160,8 +160,6 @@ IMAGE_INSTALL += "netcat"
 
 IMAGE_INSTALL += "curl"
 
-IMAGE_INSTALL += "kernel-module-vcan"
-
 # this needs to be done in local.conf
 # KERNEL_MODULE_AUTOLOAD += "vcan"
 
