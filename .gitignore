@@ -6,3 +6,5 @@ dist
 cdk.out
 
 cdk.context.json
+/demo-iot-automotive-embeddedlinux-image.iml
+*.iml
