@@ -50,5 +50,8 @@ KERNEL_MODULE_AUTOLOAD += "vcan"
 
 IMAGE_INSTALL += "vcan-ec2-multicast-receiver"
 
+# create vcan0 network interface
+IMAGE_INSTALL += "vcan0-netdev-config"
+
 # this line together with the systemd-serialgetty.bbappend will enable passwordless login via serial console
 IMAGE_FEATURES += "empty-root-password"
