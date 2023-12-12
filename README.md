@@ -163,6 +163,9 @@ echo -e GGV2_DATA_EP=\"$(aws --output text iot describe-endpoint \
 echo -e GGV2_CRED_EP=\"$(aws --output text iot describe-endpoint \
     --endpoint-type iot:CredentialProvider \
     --query 'endpointAddress')\" >> repo_seed/site.conf
+
+echo -e GGV2_TES_RALIAS=\"$(aws cloudformation describe-stacks --stack-name GGFleetProvisoning \
+ --query 'Stacks[0].Outputs[?OutputKey==`GGTokenExchangeRoleAlias`].OutputValue' --output text)\" >> repo_seed/site.conf
 ```
 
 ##### upload site.conf
