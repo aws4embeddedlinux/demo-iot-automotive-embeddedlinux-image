@@ -160,8 +160,3 @@ IMAGE_INSTALL += "netcat"
 
 IMAGE_INSTALL += "curl"
 
-# this needs to be done in local.conf
-# KERNEL_MODULE_AUTOLOAD += "vcan"
-
-# create vcan0 network interface
-IMAGE_INSTALL += "vcan0-netdev-config"
