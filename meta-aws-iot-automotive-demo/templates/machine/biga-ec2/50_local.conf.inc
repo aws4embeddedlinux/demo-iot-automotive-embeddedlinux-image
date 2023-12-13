@@ -55,3 +55,5 @@ IMAGE_INSTALL += "vcan0-netdev-config"
 
 # this line together with the systemd-serialgetty.bbappend will enable passwordless login via serial console
 IMAGE_FEATURES += "empty-root-password"
+
+GGV2_THING_NAME  = "vCar"
