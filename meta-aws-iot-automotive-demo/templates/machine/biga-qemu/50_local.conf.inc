@@ -47,3 +47,5 @@ PACKAGECONFIG:pn-greengrass-bin += "fleetprovisioning"
 KERNEL_MODULE_AUTOLOAD += "vcan"
 
 IMAGE_INSTALL += "vcan-ec2-multicast-receiver"
+
+GGV2_THING_NAME  = "vCar"

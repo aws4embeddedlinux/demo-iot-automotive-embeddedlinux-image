@@ -1,5 +1,6 @@
 ###### instead of using fsl-auto distro we copy this here to have a AGL base ######
-require conf/distro/fsl-auto.conf
+# require conf/distro/fsl-auto.conf
+DISTRO = "fsl-auto"
 # disable image_prelink
 USER_CLASSES = ""
 
@@ -33,3 +34,5 @@ IMAGE_INSTALL += " packagegroup-core-ssh-openssh minicom avahi-daemon "
 HOSTNAME_pn-base-files = "goldbox"
 
 PACKAGECONFIG:pn-greengrass-bin += "fleetprovisioning"
+
+GGV2_THING_NAME  = "vCar"

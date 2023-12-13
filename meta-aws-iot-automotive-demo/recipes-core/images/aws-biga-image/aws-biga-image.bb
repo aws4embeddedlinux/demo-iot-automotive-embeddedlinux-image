@@ -147,11 +147,6 @@ IMAGE_ROOTFS_EXTRA_SPACE = "1048576"
 
 EXTRA_IMAGE_FEATURES += "debug-tweaks tools-debug"
 
-# other configuration is part of site.conf (see readme)
-GGV2_THING_NAME  = "vCar"
-GGV2_TES_RALIAS  = "GGTokenExchangeRoleAlias"
-
-
 IMAGE_INSTALL += "kmod"
 
 IMAGE_INSTALL += "socat"
@@ -159,4 +154,3 @@ IMAGE_INSTALL += "socat"
 IMAGE_INSTALL += "netcat"
 
 IMAGE_INSTALL += "curl"
-
