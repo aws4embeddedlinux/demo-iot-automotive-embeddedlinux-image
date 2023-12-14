@@ -33,6 +33,15 @@ IMAGE_INSTALL += " ssh"
 IMAGE_INSTALL += " packagegroup-core-ssh-openssh minicom avahi-daemon "
 HOSTNAME_pn-base-files = "goldbox"
 
+# necessary to have a working network
+BBMASK += " \
+        meta-agl/meta-agl-core/recipes-core/systemd/systemd-conf_%.bbappend \
+        meta-agl/meta-agl-core/recipes-core/systemd/systemd_%.bbappend \
+"
+
+# create can0 network interface
+IMAGE_INSTALL += "can0-netdev-config"
+
 PACKAGECONFIG:pn-greengrass-bin += "fleetprovisioning"
 
 GGV2_THING_NAME  = "vCar"
