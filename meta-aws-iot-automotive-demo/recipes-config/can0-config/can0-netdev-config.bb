@@ -4,7 +4,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 
 inherit systemd allarch
 
-SRC_URI = "file://can0.netdev \
+SRC_URI = "file://80-can.network \
 "
 
 do_configure[noexec] = "1"
@@ -13,7 +13,7 @@ do_compile[noexec] = "1"
 do_install() {
     # Install systemd-networkd can0 configuration
     install -d ${D}${systemd_unitdir}/network
-    install -m 0644 ${WORKDIR}/can0.netdev ${D}${systemd_unitdir}/network/
+    install -m 0644 ${WORKDIR}/80-can.network ${D}${systemd_unitdir}/network/
 }
 
 FILES:${PN} += "${systemd_unitdir}/network ${systemd_system_unitdir}"

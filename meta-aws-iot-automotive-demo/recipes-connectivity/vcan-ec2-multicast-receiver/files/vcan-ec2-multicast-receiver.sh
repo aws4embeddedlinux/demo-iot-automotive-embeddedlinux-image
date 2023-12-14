@@ -1,6 +1,5 @@
 #!/bin/bash
 set -e
-ip link set up vcan0
 
 export IP=$(curl -s http://169.254.169.254/latest/meta-data/local-ipv4)
 echo "my ip: $IP"

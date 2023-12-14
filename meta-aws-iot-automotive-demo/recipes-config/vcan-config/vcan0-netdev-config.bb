@@ -4,7 +4,9 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 
 inherit systemd allarch
 
-SRC_URI = "file://vcan0.netdev \
+SRC_URI = "\
+    file://vcan0.netdev \
+    file://80-vcan.network \
 "
 
 do_configure[noexec] = "1"
@@ -14,6 +16,7 @@ do_install() {
     # Install systemd-networkd vcan0 configuration
     install -d ${D}${systemd_unitdir}/network
     install -m 0644 ${WORKDIR}/vcan0.netdev ${D}${systemd_unitdir}/network/
+    install -m 0644 ${WORKDIR}/80-vcan.network ${D}${systemd_unitdir}/network/
 }
 
 FILES:${PN} += "${systemd_unitdir}/network ${systemd_system_unitdir}"
