@@ -22,21 +22,20 @@ BBFILE_PRIORITY_meta-aws = "99"
 KERNEL_FEATURES:append = " features/can/can.scc"
 
 IMAGE_INSTALL =+ "iproute2 canutils"
-IMAGE_INSTALL =+ "kernel-module-kvaser-pci"
-IMAGE_INSTALL =+ "kernel-module-c-can-platform"
-IMAGE_INSTALL =+ "kernel-module-can-dev"
-IMAGE_INSTALL =+ "kernel-module-c-can"
-IMAGE_INSTALL =+ "kernel-module-can-bcm"
-IMAGE_INSTALL =+ "kernel-module-can-gw"
-IMAGE_INSTALL =+ "kernel-module-can-raw"
 
+#this is the qemu adapter
+IMAGE_INSTALL =+ "kernel-module-kvaser-pci"
 KERNEL_MODULE_AUTOLOAD =+ "kvaser-pci"
+
 KERNEL_MODULE_AUTOLOAD =+ "c-can-platform"
 KERNEL_MODULE_AUTOLOAD =+ "can-dev"
 KERNEL_MODULE_AUTOLOAD =+ "c-can"
 KERNEL_MODULE_AUTOLOAD =+ "can-bcm"
 KERNEL_MODULE_AUTOLOAD =+ "can-gw"
 KERNEL_MODULE_AUTOLOAD =+ "can-raw"
+
+KERNEL_MODULE_AUTOLOAD =+ "can"
+KERNEL_MODULE_AUTOLOAD =+ "vcan"
 
 # GG needs more mem than default
 QB_MEM = "-m 2048"
@@ -49,3 +48,9 @@ KERNEL_MODULE_AUTOLOAD += "vcan"
 IMAGE_INSTALL += "vcan-ec2-multicast-receiver"
 
 GGV2_THING_NAME  = "vCar"
+
+# create vcan0 network interface
+IMAGE_INSTALL += "vcan0-netdev-config"
+
+# create can0 network interface
+IMAGE_INSTALL += "can0-netdev-config"
