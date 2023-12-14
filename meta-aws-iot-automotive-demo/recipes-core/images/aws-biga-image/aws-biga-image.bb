@@ -154,3 +154,5 @@ IMAGE_INSTALL += "socat"
 IMAGE_INSTALL += "netcat"
 
 IMAGE_INSTALL += "curl"
+
+IMAGE_INSTALL += "ntp-systemd"
