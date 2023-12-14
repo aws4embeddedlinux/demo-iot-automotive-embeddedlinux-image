@@ -46,4 +46,6 @@ IMAGE_INSTALL += "vcan0-netdev-config"
 # this line together with the systemd-serialgetty.bbappend will enable passwordless login via serial console
 IMAGE_FEATURES += "empty-root-password"
 
+# becareful setting those values just in the image does not work, because they are not propagated correct to greengrass-bin recipe
 GGV2_THING_NAME  = "vCar"
+GGV2_THING_GROUP = "EmbeddedLinuxFleet"

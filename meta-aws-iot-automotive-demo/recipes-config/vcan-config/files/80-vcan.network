@@ -1,0 +1,6 @@
+[Match]
+Name=vcan*
+
+[CAN]
+BitRate=500K
+RestartSec=100ms

@@ -1,7 +1,0 @@
-[NetDev]
-Name=can0
-Kind=can
-
-[can]
-BitRate=500K
-RestartSec=100ms

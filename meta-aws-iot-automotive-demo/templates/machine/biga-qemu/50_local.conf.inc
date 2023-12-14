@@ -45,9 +45,9 @@ PACKAGECONFIG:pn-greengrass-bin += "fleetprovisioning"
 # this needs to be done in local.conf
 KERNEL_MODULE_AUTOLOAD += "vcan"
 
-IMAGE_INSTALL += "vcan-ec2-multicast-receiver"
-
+# becareful setting those values just in the image does not work, because they are not propagated correct to greengrass-bin recipe
 GGV2_THING_NAME  = "vCar"
+GGV2_THING_GROUP = "EmbeddedLinuxFleet"
 
 # create vcan0 network interface
 IMAGE_INSTALL += "vcan0-netdev-config"

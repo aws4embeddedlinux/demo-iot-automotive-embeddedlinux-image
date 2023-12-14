@@ -44,4 +44,6 @@ IMAGE_INSTALL += "can0-netdev-config"
 
 PACKAGECONFIG:pn-greengrass-bin += "fleetprovisioning"
 
+# becareful setting those values just in the image does not work, because they are not propagated correct to greengrass-bin recipe
 GGV2_THING_NAME  = "vCar"
+GGV2_THING_GROUP = "EmbeddedLinuxFleet"
