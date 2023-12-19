@@ -21,8 +21,6 @@ BBFILE_PRIORITY_meta-aws = "99"
 # build and install vcan support
 KERNEL_FEATURES:append = " features/can/can.scc"
 
-IMAGE_INSTALL =+ "iproute2 canutils"
-
 #this is the qemu adapter
 IMAGE_INSTALL =+ "kernel-module-kvaser-pci"
 KERNEL_MODULE_AUTOLOAD =+ "kvaser-pci"

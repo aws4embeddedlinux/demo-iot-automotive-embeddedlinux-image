@@ -137,7 +137,7 @@ ROS_DISTRO = "galactic"
 
 # EXTRA_IMAGE_FEATURES ?= "ros-implicit-workspace"
 
-IMAGE_INSTALL  += "iproute2 canutils"
+IMAGE_INSTALL  += "iproute2 can-utils"
 
 IMAGE_INSTALL += "openssh-sshd"
 
