@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import * as cdk from "aws-cdk-lib";
+import {Secret} from "aws-cdk-lib/aws-secretsmanager";
 import {
   EmbeddedLinuxPipelineStack,
   BuildImageDataStack,
@@ -9,6 +10,18 @@ import {
   ImageKind,
   ProjectKind,
 } from "aws4embeddedlinux-cdk-lib";
+import {
+  AccountPrincipal,
+  ArnPrincipal,
+  Effect,
+  IRole,
+  ManagedPolicy,
+  Policy,
+  PolicyDocument,
+  PolicyStatement,
+  Role,
+  ServicePrincipal
+} from "aws-cdk-lib/aws-iam";
 import * as path from 'path';
 
 const app = new cdk.App();
@@ -58,7 +71,7 @@ const vpc = new PipelineNetworkStack(app, {
 /**
  * Create a biga pipeline for AMI.
  */
-new EmbeddedLinuxPipelineStack(app, "EC2AMIBigaPipeline", {
+const biga_ec2_pipeline = new EmbeddedLinuxPipelineStack(app, "EC2AMIBigaPipeline", {
   ...defaultProps,
   imageRepo: buildImageRepo.repository,
   imageTag: ImageKind.Ubuntu22_04,
@@ -70,7 +83,7 @@ new EmbeddedLinuxPipelineStack(app, "EC2AMIBigaPipeline", {
 /**
  * Create a biga pipeline for agl-nxp-goldbox.
  */
-new EmbeddedLinuxPipelineStack(app, "NxpGoldboxBigaPipeline", {
+const biga_goldbox_pipeline = new EmbeddedLinuxPipelineStack(app, "NxpGoldboxBigaPipeline", {
   ...defaultProps,
   imageRepo: buildImageRepo.repository,
   imageTag: ImageKind.Ubuntu22_04,
