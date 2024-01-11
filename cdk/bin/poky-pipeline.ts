@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import * as cdk from "aws-cdk-lib";
+import {Secret} from "aws-cdk-lib/aws-secretsmanager";
 import {
   EmbeddedLinuxPipelineStack,
   BuildImageDataStack,
@@ -9,6 +10,18 @@ import {
   ImageKind,
   ProjectKind,
 } from "aws4embeddedlinux-cdk-lib";
+import {
+  AccountPrincipal,
+  ArnPrincipal,
+  Effect,
+  IRole,
+  ManagedPolicy,
+  Policy,
+  PolicyDocument,
+  PolicyStatement,
+  Role,
+  ServicePrincipal
+} from "aws-cdk-lib/aws-iam";
 import * as path from 'path';
 
 const app = new cdk.App();
@@ -63,6 +76,14 @@ new EmbeddedLinuxPipelineStack(app, "EC2AMIBigaPipeline", {
   imageRepo: buildImageRepo.repository,
   imageTag: ImageKind.Ubuntu22_04,
   vpc: vpc.vpc,
+  buildPolicyAdditions: [
+    PolicyStatement.fromJson({
+      Effect: "Allow",
+      Action: "secretsmanager:GetSecretValue",
+      Resource:
+      `arn:aws:secretsmanager:${env.region}:${env.account}:secret:EC2AMIBigaPipeline*`,
+    }),
+  ],
   layerRepoName: "ec2-ami-biga-layer-repo",
   projectKind: ProjectKind.PokyAmi,
 });
@@ -75,6 +96,14 @@ new EmbeddedLinuxPipelineStack(app, "NxpGoldboxBigaPipeline", {
   imageRepo: buildImageRepo.repository,
   imageTag: ImageKind.Ubuntu22_04,
   vpc: vpc.vpc,
+  buildPolicyAdditions: [
+    PolicyStatement.fromJson({
+      Effect: "Allow",
+      Action: "secretsmanager:GetSecretValue",
+      Resource:
+      `arn:aws:secretsmanager:${env.region}:${env.account}:secret:NxpGoldboxBigaPipeline*`,
+    }),
+  ],
   layerRepoName: "nxp-goldbox-biga-layer-repo",
   projectKind: ProjectKind.MetaAwsDemo,
 });
