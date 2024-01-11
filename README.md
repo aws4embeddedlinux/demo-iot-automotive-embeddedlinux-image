@@ -91,63 +91,15 @@ Once our devices get provisioned they will become part of this Thing Group allow
 aws iot create-thing-group --thing-group-name EmbeddedLinuxFleet
 ```
 
-##### put claim certificates in CodeCommit repo:
+##### put claim certificates in SecretsManager repo:
 ```bash
-aws codecommit put-file \
-    --repository-name ec2-ami-biga-layer-repo \
-    --branch-name main \
-    --file-content file://claim-certs/claim.cert.pem \
-    --file-path /claim.cert.pem \
-    --parent-commit-id $(aws codecommit get-branch --repository-name ec2-ami-biga-layer-repo --branch-name main --query 'branch.commitId' --output text) \
-    --commit-message "commit claim certificates" \
-    --cli-binary-format raw-in-base64-out
+aws secretsmanager create-secret --name EC2AMIBigaPipeline_claim.cert.pem --secret-binary fileb://claim-certs/claim.cert.pem
+aws secretsmanager create-secret --name EC2AMIBigaPipeline_claim.pkey.pem --secret-binary fileb://claim-certs/claim.pkey.pem
+aws secretsmanager create-secret --name EC2AMIBigaPipeline_claim.root.pem --secret-binary fileb://claim-certs/claim.root.pem
 
-aws codecommit put-file \
-    --repository-name ec2-ami-biga-layer-repo \
-    --branch-name main \
-    --file-content file://claim-certs/claim.pkey.pem \
-    --file-path /claim.pkey.pem \
-    --parent-commit-id $(aws codecommit get-branch --repository-name ec2-ami-biga-layer-repo --branch-name main --query 'branch.commitId' --output text) \
-    --commit-message "commit claim certificates" \
-    --cli-binary-format raw-in-base64-out
-
-
-aws codecommit put-file \
-    --repository-name ec2-ami-biga-layer-repo \
-    --branch-name main \
-    --file-content file://claim-certs/claim.root.pem \
-    --file-path /claim.root.pem  \
-    --parent-commit-id $(aws codecommit get-branch --repository-name ec2-ami-biga-layer-repo --branch-name main --query 'branch.commitId' --output text) \
-    --commit-message "commit claim certificates" \
-    --cli-binary-format raw-in-base64-out
-
-aws codecommit put-file \
-    --repository-name nxp-goldbox-biga-layer-repo \
-    --branch-name main \
-    --file-content file://claim-certs/claim.cert.pem \
-    --file-path /claim.cert.pem \
-    --parent-commit-id $(aws codecommit get-branch --repository-name nxp-goldbox-biga-layer-repo --branch-name main --query 'branch.commitId' --output text) \
-    --commit-message "commit claim certificates" \
-    --cli-binary-format raw-in-base64-out
-
-aws codecommit put-file \
-    --repository-name nxp-goldbox-biga-layer-repo \
-    --branch-name main \
-    --file-content file://claim-certs/claim.pkey.pem \
-    --file-path /claim.pkey.pem \
-    --parent-commit-id $(aws codecommit get-branch --repository-name nxp-goldbox-biga-layer-repo --branch-name main --query 'branch.commitId' --output text) \
-    --commit-message "commit claim certificates" \
-    --cli-binary-format raw-in-base64-out
-
-aws codecommit put-file \
-    --repository-name nxp-goldbox-biga-layer-repo \
-    --branch-name main \
-    --file-content file://claim-certs/claim.root.pem \
-    --file-path /claim.root.pem  \
-    --parent-commit-id $(aws codecommit get-branch --repository-name nxp-goldbox-biga-layer-repo --branch-name main --query 'branch.commitId' --output text) \
-    --commit-message "commit claim certificates" \
-    --cli-binary-format raw-in-base64-out
-
+aws secretsmanager create-secret --name NxpGoldboxBigaPipeline_claim.cert.pem --secret-binary fileb://claim-certs/claim.cert.pem
+aws secretsmanager create-secret --name NxpGoldboxBigaPipeline_claim.pkey.pem --secret-binary fileb://claim-certs/claim.pkey.pem
+aws secretsmanager create-secret --name NxpGoldboxBigaPipeline_claim.root.pem --secret-binary fileb://claim-certs/claim.root.pem
 ```
 
 #### seed repo with site.conf:
@@ -310,9 +262,6 @@ Third, we need a security group (to allow ssh access later on)
 ```
 aws ec2 create-security-group --group-name bigaSG --description "a default sg for biga"
 aws ec2 authorize-security-group-ingress --group-id <security_group_id>  --protocol tcp  --port 22  --cidr 0.0.0.0/0
-
-
-
 ```
 If you already created it, you can find the security_group_id this way:
 ```
