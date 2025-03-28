@@ -1,0 +1,94 @@
+version: 0.2
+run-as: yoctouser
+
+env:
+  shell: bash
+  # HOME is set to /root even when running as a non-root user.
+  variables:
+    HOME: "/home/yoctouser"
+
+phases:
+  pre_build:
+    run-as: root
+    commands:
+      - echo "Pre build started - [$(date '+%F %H:%M:%S')]"
+      - mkdir -p /nfs/sstate-cache && chown -R yoctouser /nfs/sstate-cache
+      - mkdir -p /nfs/downloads && chown -R yoctouser /nfs/downloads
+      - mkdir -p /nfs/build-output && chown -R yoctouser /nfs/build-output
+      - chmod -R 755 /nfs/sstate-cache
+      - chmod -R 755 /nfs/downloads
+      - chmod -R 755 /nfs/build-output
+      - |
+          if [[ -n "${PURGE_EFS}" ]] ; then
+            echo "Starting EFS purge."
+            rm -rvf /nfs/downloads/*
+            rm -rvf /nfs/sstate-cache/*
+            rm -rvf /nfs/build-output/*
+          fi
+      - echo "Pre build completed - [$(date '+%F %H:%M:%S')]"
+  build:
+    commands:
+      - echo "Build started - [$(date '+%F %H:%M:%S')]"
+      - cd ${CODEBUILD_SRC_DIR}
+      - if [ -d .git  ]; then rm -rf .git ; fi
+      - if [ -d .repo ]; then rm -rf .repo; fi
+      - git init . && git add --all && git commit -m 'initial' --allow-empty
+      - repo init -u https://github.com/adadouche/demo-iot-automotive-embeddedlinux-image.git -b dev-adadouche -m "source-repo-biga/manifest.xml"
+      - repo sync
+      # - # current working directory will change to ${TMP_DIR} after the aglsetup.sh script is executed so make sure to refference the right path
+      - source meta-agl/scripts/aglsetup.sh  -f -m biga-${TARGET} -b ${TMP_DIR}
+      - echo Creating site.conf
+      - |
+          echo -e "" > ${TMP_DIR}/conf/site.conf
+          echo -e GGV2_REGION=\"${GGV2_REGION}\" >> ${TMP_DIR}/conf/site.conf
+          echo -e GGV2_TES_RALIAS=\"${GGV2_TES_RALIAS}\" >> ${TMP_DIR}/conf/site.conf
+          echo -e GGV2_DATA_EP=\"${GGV2_DATA_EP}\" >> ${TMP_DIR}/conf/site.conf
+          echo -e GGV2_CRED_EP=\"${GGV2_CRED_EP}\" >> ${TMP_DIR}/conf/site.conf
+      - echo Creating claim files using certificate id ${CERTIFICATE_ID}
+      - mkdir -p ${CODEBUILD_SRC_DIR}/external/meta-aws/recipes-iot/aws-iot-greengrass/files/
+      # - CERTIFICATE_ID=$(aws ssm get-parameter --name "/${SSM_PREFIX}/certificateId" --query Parameter.Value --output text)
+      - aws ssm get-parameter --name "/${SSM_PREFIX}/${CERTIFICATE_ID}/pem"          --query Parameter.Value --output text > ${CODEBUILD_SRC_DIR}/external/meta-aws/recipes-iot/aws-iot-greengrass/files/claim.cert.pem
+      - aws ssm get-parameter --name "/${SSM_PREFIX}/${CERTIFICATE_ID}/key-private"  --query Parameter.Value --output text > ${CODEBUILD_SRC_DIR}/external/meta-aws/recipes-iot/aws-iot-greengrass/files/claim.pkey.pem
+      - aws ssm get-parameter --name "/${SSM_PREFIX}/${CERTIFICATE_ID}/root-ca"      --query Parameter.Value --output text > ${CODEBUILD_SRC_DIR}/external/meta-aws/recipes-iot/aws-iot-greengrass/files/claim.root.pem
+      - echo "bitbake build started - [$(date '+%F %H:%M:%S')]"
+      - bitbake aws-biga-image
+      - bitbake aws-biga-image -c populate_sdk
+      - echo "bitbake build completed - [$(date '+%F %H:%M:%S')]"
+      - echo "Build completed - [$(date '+%F %H:%M:%S')]"
+  post_build:
+    commands:
+      - echo "Post build statred - [$(date '+%F %H:%M:%S')]"
+      - |
+          if [ ${TARGET} = "ec2" ]; then
+            chmod +x ${CODEBUILD_SRC_DIR}/create-ec2-ami.sh
+            # this list all testdata.json and *.vhd files
+            find ${TMP_DIR}/tmp/deploy/images/aws-ec2-arm64/  -name *.testdata.json
+            find ${TMP_DIR}/tmp/deploy/images/aws-ec2-arm64/  -name *.vhd
+            echo "Creating EC2 AMI"
+            ${CODEBUILD_SRC_DIR}/create-ec2-ami.sh \
+              IMPORT_BUCKET_NAME=${PIPELINE_OUTPUT_BUCKET} \
+              AMI_DISK_SIZE_GB=16 \
+              IMAGE_NAME=aws-biga-image \
+              MACHINE_NAME=aws-ec2-arm64 \
+              TMPDIR=${TMP_DIR}/tmp \
+              ROLE_NAME=$VM_IMPORT_ROLE \
+              IMAGE_EXTEN=.rootfs \
+              PIPELINE_PROJECT_NAME=${PIPELINE_PROJECT_NAME}
+            echo "EC2 AMI created"
+          fi          
+      # Prune old files in our EFS Mounts, that are not accessed by this or any build within 30 days
+      - find /nfs/sstate-cache -atime +30 -type f -delete
+      # only delete empty dirs
+      - find /nfs/sstate-cache -atime +30 -type d -empty -delete
+      # Prune old files in our EFS Mounts, that are not accessed by this or any build within 30 days
+      - find /nfs/downloads -atime +30 -type f -delete
+      # only delete empty dirs
+      - find /nfs/downloads -atime +30 -type d -empty -delete
+      - echo "Post build completed - [$(date '+%F %H:%M:%S')]"
+
+artifacts:
+  discard-paths: true
+  files:
+    - ${TMP_DIR}/tmp/deploy/images/s32g274ardb2/*.sdcard
+    - ${TMP_DIR}/tmp/deploy/sdk/*.sh
+
