@@ -1,10 +1,35 @@
-node_modules
+*.js
+!jest.config.js
+!.eslintrc.js
+!.prettierrc.js
+
+!lib/**/*.ts
+!test/**/*.ts
+*.d.ts
+
 dist
+node_modules
+
+# yarn asset
+yarn-install.log
+.yarn
+!.yarn/releases/
+!.yarn/plugins/
+!.yarn/versions/
+!.yarn/sdks/
+.pnp.*
 
 # CDK asset staging directory
 .cdk.staging
 cdk.out
 
 cdk.context.json
-/demo-iot-automotive-embeddedlinux-image.iml
-*.iml
+
+# in case you are building with bitbake locally
+source-repo-biga/.repo
+source-repo-biga/bsp
+source-repo-biga/external
+source-repo-biga/meta-agl*
+
+**/test/run-test.log
+**/tmp**

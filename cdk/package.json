@@ -1,38 +1,58 @@
 {
   "name": "demo-iot-automotive-embeddedlinux-image-pipeline",
-  "version": "0.1.0",
-  "bin": {
-    "demos-pipeline": "bin/poky-pipeline.js"
-  },
+  "version": "0.2.0",
+  "bin": "bin/biga-demo.ts",
+  "license": "MIT",
   "scripts": {
-    "clean": "tsc --build --clean && rm -rf dist && rm -rf cdk.out",
+    "clean": "tsc --build --clean",
     "build": "tsc",
     "watch": "tsc -w",
-    "test": "jest",
+    "test": "jest --passWithNoTests --updateSnapshot",
     "cdk": "cdk",
-    "doc": "typedoc",
+    "doc": "typedoc --sort source-order --readme README.md",
     "format": "eslint '**/*.{js,ts,json}' --quiet --fix",
-    "check": "eslint '**/*.{js,ts,json}'"
-  },
-  "devDependencies": {
-    "@types/jest": "^29.5.1",
-    "@types/node": "20.1.0",
-    "@typescript-eslint/eslint-plugin": "^5.59.6",
-    "@typescript-eslint/parser": "^5.59.6",
-    "aws-cdk-lib": "^2.86.0",
-    "eslint": "^8.40.0",
-    "eslint-config-prettier": "^8.8.0",
-    "eslint-plugin-prettier": "^4.2.1",
-    "jest": "^29.5.0",
-    "prettier": "^2.8.8",
-    "ts-jest": "^29.1.0",
-    "ts-node": "^10.9.1",
-    "typedoc": "^0.24.8",
-    "typescript": "~5.0.4"
+    "check": "eslint '**/*.{js,ts,json}'",
+    "postclean": "rm -rf ./dist"
   },
   "dependencies": {
-    "aws4embeddedlinux-cdk-lib": "aws4embeddedlinux/aws4embeddedlinux-ci",
-    "constructs": "^10.0.0",
+    "aws-cdk-lib": "^2.186.0",
+    "aws4embeddedlinux-cdk-lib": "github:aws4embeddedlinux/aws4embeddedlinux-ci",
+    "cdk-iot-greengrass-fleet-provisioning": "^0.0.2",
+    "constructs": "^10.4.2",
     "source-map-support": "^0.5.21"
-  }
+  },
+  "devDependencies": {
+    "@eslint/compat": "^1.2.4",
+    "@eslint/eslintrc": "^3.2.0",
+    "@eslint/js": "^9.16.0",
+    "@smithy/smithy-client": "^4.1.6",
+    "@types/aws-lambda": "^8.10.147",
+    "@types/jest": "^29.5.14",
+    "@types/node": "20.14.8",
+    "@typescript-eslint/eslint-plugin": "^8.18.0",
+    "@typescript-eslint/parser": "^8.18.0",
+    "aws-cdk": "^2.1006.0",
+    "cdk-nag": "^2.35.0",
+    "esbuild": "^0.25.1",
+    "eslint": "^9.16.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-tsdoc": "^0.4.0",
+    "globals": "^15.13.0",
+    "jest": "^29.7.0",
+    "prettier": "^3.4.2",
+    "ts-jest": "^29.2.5",
+    "ts-node": "^10.9.2",
+    "typedoc": "^0.27.4",
+    "typescript": "~5.7.2",
+    "typescript-eslint": "^8.18.0"
+  },
+  "resolutions": {
+    "glob": "^9.3.5",
+    "aws4embeddedlinux-cdk-lib": "portal:/mnt/c/MyCodeArea/content/aws4embeddedlinux/aws4embeddedlinux-ci"
+  },
+  "overrides": {
+    "glob": "^9.3.5"
+  },
+  "packageManager": "yarn@4.7.0"
 }
