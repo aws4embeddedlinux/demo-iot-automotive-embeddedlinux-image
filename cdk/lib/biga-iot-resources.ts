@@ -42,12 +42,12 @@ export class BigaIoTResourcesStack extends cdk.Stack {
             certificatePrefix: this.certificatePrefix,
         });
 
-        this.certificateId = cn.getFleetProvisioningCertificateId();
-        this.certificateArn = cn.getFleetProvisioningCertificateArn();
+        this.certificateId = cn.certificateId;
+        this.certificateArn = cn.certificateArn;
 
         this.region = props.env!.region!;
-        this.roleAlias = cn.getTokenExchangeRoleAlias().roleAlias!;
-        this.iotDataEndpoint = cn.getIoTDataEndpoint();
-        this.iotCredentialEndpoint = cn.getIoTCredentialEndpoint();
+        this.roleAlias = cn.tokenExchangeRoleAlias.roleAlias!;
+        this.iotDataEndpoint = cn.dataEndpoint;
+        this.iotCredentialEndpoint = cn.credentialEndpoint;
     }
 }
