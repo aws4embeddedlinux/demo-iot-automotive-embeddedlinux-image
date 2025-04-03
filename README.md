@@ -154,11 +154,16 @@ In case of flashing the NXP GoldBox, once the **biga-build-nxp-goldbox-** pipeli
 Alternatively, you can run the following commands:
 
 ```sh
-ami_s3_bucket_name=$(aws cloudformation describe-stacks --profile ${AWS_PROFILE} --stack-name biga-ci-build-nxp-goldbox --output text --query "Stacks[0].Outputs[?OutputKey=='BuildOutput'].OutputValue")
+S3URI=$(aws cloudformation describe-stacks \
+  --profile ${AWS_PROFILE} \
+  --stack-name biga-ci-pipeline-goldbox \
+  --output text \
+  --query "Stacks[0].Outputs[?OutputKey=='OutputURI'].OutputValue" \
+)
 
-echo "Output bucket name : $ami_s3_bucket_name"
+echo "Output S3 bucket URI : $S3URI"
 
-aws s3 cp s3://${ami_s3_bucket_name}/aws-biga-image-s32g274ardb2.sdcard .
+aws s3 cp ${S3URI}/aws-biga-image-s32g274ardb2.sdcard .
 ```
 
 Once the download is complete, insert the SDCard into the computer.
