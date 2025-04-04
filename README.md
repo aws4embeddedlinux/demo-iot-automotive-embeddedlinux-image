@@ -124,13 +124,17 @@ or one ofthe following command to deploy all pipelines:
 
 ```bash
 cdk deploy biga-ci-pipelines \
-  --require-approval never
+  --require-approval never\
+  --concurrency 3
 ```
 
 or:
 
 ```bash
-cdk deploy --all --require-approval never
+cdk deploy  \
+  --all  \
+  --require-approval never \
+  --concurrency 3
 ```
 
 ### Cleanup

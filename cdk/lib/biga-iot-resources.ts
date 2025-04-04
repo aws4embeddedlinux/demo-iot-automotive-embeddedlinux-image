@@ -49,5 +49,15 @@ export class BigaIoTResourcesStack extends cdk.Stack {
         this.roleAlias = cn.tokenExchangeRoleAlias.roleAlias!;
         this.iotDataEndpoint = cn.dataEndpoint;
         this.iotCredentialEndpoint = cn.credentialEndpoint;
+
+
+        // Add stack output for the ECR repository and image tag
+        new cdk.CfnOutput(this, "certificateId", { value: this.certificateId, description: "The AWS IoT Certificate Id", });
+        new cdk.CfnOutput(this, "certificateArn", { value: this.certificateArn, description: "The AWS IoT Certificate ARN", });
+        new cdk.CfnOutput(this, "certificateBucket", { value: this.certificateBucket.bucketName, description: "The S3 Bucket where the AWS IoT Certificate assets were saved", });
+        new cdk.CfnOutput(this, "thingGroup", { value: this.thingGroup.thingGroupName!, description: "The AWS IoT Thing Group", });
+        new cdk.CfnOutput(this, "roleAlias", { value: this.roleAlias, description: "The AWS IoT Role Alias", });
+        new cdk.CfnOutput(this, "iotDataEndpoint", { value: this.iotDataEndpoint, description: "The AWS IoT Data Endpoint", });
+        new cdk.CfnOutput(this, "iotCredentialEndpoint", { value: this.iotCredentialEndpoint, description: "The AWS IoT Credential Endpoint", });
     }
 }

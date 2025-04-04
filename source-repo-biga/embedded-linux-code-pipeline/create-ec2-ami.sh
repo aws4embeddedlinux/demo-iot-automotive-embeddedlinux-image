@@ -76,7 +76,7 @@ echo IMAGE_ROOTFS_SIZE="$IMAGE_ROOTFS_SIZE"
 echo AMI_DISK_SIZE_GB="$AMI_DISK_SIZE_GB"
 
 echo "Pushing image ${IMAGE_NAME}${IMAGE_EXTEN}.wic.vhd to s3://${IMPORT_BUCKET_NAME}"
-aws s3 cp "${IMG_DIR}/${IMAGE_NAME}${IMAGE_EXTEN}.wic.vhd" "s3://${IMPORT_BUCKET_NAME}/${PIPELINE_PROJECT_NAME}"
+aws s3 cp "${IMG_DIR}/${IMAGE_NAME}${IMAGE_EXTEN}.wic.vhd" "s3://${IMPORT_BUCKET_NAME}/${PIPELINE_PROJECT_NAME}/"
 
 cat <<EOF > image-import.json
 {
@@ -197,6 +197,7 @@ if [ $x -eq 120 ]; then
     exit 1
 elif [ "$BACKUP_STATUS" = "Completed" ]; then
     echo "Backup completed Successfully"
+    aws s3 cp "s3://${IMPORT_BUCKET_NAME}/${AMI_ID}.bin" "s3://${IMPORT_BUCKET_NAME}/${PIPELINE_PROJECT_NAME}/${AMI_ID}.bin"
 else
     echo "Backup Failed, exiting"
     exit 2
