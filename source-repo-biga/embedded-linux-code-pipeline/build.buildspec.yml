@@ -33,7 +33,7 @@ phases:
       - if [ -d .git  ]; then rm -rf .git ; fi
       - if [ -d .repo ]; then rm -rf .repo; fi
       - git init . && git add --all && git commit -m 'initial' --allow-empty
-      - repo init -u https://github.com/adadouche/demo-iot-automotive-embeddedlinux-image.git -b dev-adadouche -m "source-repo-biga/manifest.xml"
+      - repo init -u https://github.com/aws4embeddedlinux/demo-iot-automotive-embeddedlinux-image.git -b main -m "source-repo-biga/manifest.xml"
       - repo sync
       # - # current working directory will change to ${TMP_DIR} after the aglsetup.sh script is executed so make sure to refference the right path
       - source meta-agl/scripts/aglsetup.sh  -f -m biga-${TARGET} -b ${TMP_DIR}

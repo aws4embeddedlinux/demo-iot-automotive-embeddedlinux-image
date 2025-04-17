@@ -54,14 +54,7 @@ First move to the `cdk` folder:
 cd cdk
 ```
 
-Then you will need to install the CDK library including the `aws4embeddedlinux-ci` library either using `npm`:
-
-```bash
-npm install 
-npm run build
-```
-
-of `yarn':
+Then you will need to install the CDK library including the `aws4embeddedlinux-ci` library either using `yarn`:
 
 ```bash
 yarn install
@@ -124,13 +117,17 @@ or one ofthe following command to deploy all pipelines:
 
 ```bash
 cdk deploy biga-ci-pipelines \
-  --require-approval never
+  --require-approval never\
+  --concurrency 3
 ```
 
 or:
 
 ```bash
-cdk deploy --all --require-approval never
+cdk deploy  \
+  --all  \
+  --require-approval never \
+  --concurrency 3
 ```
 
 ### Cleanup
@@ -154,11 +151,16 @@ In case of flashing the NXP GoldBox, once the **biga-build-nxp-goldbox-** pipeli
 Alternatively, you can run the following commands:
 
 ```sh
-ami_s3_bucket_name=$(aws cloudformation describe-stacks --profile ${AWS_PROFILE} --stack-name biga-ci-build-nxp-goldbox --output text --query "Stacks[0].Outputs[?OutputKey=='BuildOutput'].OutputValue")
+S3URI=$(aws cloudformation describe-stacks \
+  --profile ${AWS_PROFILE} \
+  --stack-name biga-ci-pipeline-goldbox \
+  --output text \
+  --query "Stacks[0].Outputs[?OutputKey=='OutputURI'].OutputValue" \
+)
 
-echo "Output bucket name : $ami_s3_bucket_name"
+echo "Output S3 bucket URI : $S3URI"
 
-aws s3 cp s3://${ami_s3_bucket_name}/aws-biga-image-s32g274ardb2.sdcard .
+aws s3 cp ${S3URI}/aws-biga-image-s32g274ardb2.sdcard .
 ```
 
 Once the download is complete, insert the SDCard into the computer.
