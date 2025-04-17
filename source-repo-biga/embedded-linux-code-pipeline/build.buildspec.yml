@@ -36,7 +36,7 @@ phases:
       - repo init -u $SOURCE_REPO_URL -b main -m "source-repo-biga/manifest.xml"
       - repo sync
       # - # current working directory will change to ${TMP_DIR} after the aglsetup.sh script is executed so make sure to refference the right path
-      - source meta-agl/scripts/aglsetup.sh  -f -m biga-${TARGET} -b ${TMP_DIR}
+      - source meta-agl/scripts/aglsetup.sh -f -m biga-${TARGET} -b ${TMP_DIR}
       - echo Creating site.conf
       - |
         echo -e "" > ${TMP_DIR}/conf/site.conf
