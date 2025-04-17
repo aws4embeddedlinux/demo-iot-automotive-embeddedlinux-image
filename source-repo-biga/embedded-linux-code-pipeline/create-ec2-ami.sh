@@ -197,7 +197,7 @@ if [ $x -eq 120 ]; then
     exit 1
 elif [ "$BACKUP_STATUS" = "Completed" ]; then
     echo "Backup completed Successfully"
-    aws s3 cp "s3://${IMPORT_BUCKET_NAME}/${AMI_ID}.bin" "s3://${IMPORT_BUCKET_NAME}/${PIPELINE_PROJECT_NAME}/${AMI_ID}.bin"
+    aws s3 mv "s3://${IMPORT_BUCKET_NAME}/${AMI_ID}.bin" "s3://${IMPORT_BUCKET_NAME}/${PIPELINE_PROJECT_NAME}/${AMI_ID}.bin"
 else
     echo "Backup Failed, exiting"
     exit 2

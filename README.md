@@ -54,14 +54,7 @@ First move to the `cdk` folder:
 cd cdk
 ```
 
-Then you will need to install the CDK library including the `aws4embeddedlinux-ci` library either using `npm`:
-
-```bash
-npm install 
-npm run build
-```
-
-of `yarn':
+Then you will need to install the CDK library including the `aws4embeddedlinux-ci` library either using `yarn`:
 
 ```bash
 yarn install
