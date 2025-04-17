@@ -26,10 +26,11 @@ cdk.out
 cdk.context.json
 
 # in case you are building with bitbake locally
-source-repo-biga/.repo
-source-repo-biga/bsp
-source-repo-biga/external
-source-repo-biga/meta-agl*
+source-repo-biga/**/.repo
+source-repo-biga/**/bsp
+source-repo-biga/**/external
+source-repo-biga/**/meta-agl*
+source-repo-biga/**/source-repo-biga
 
 **/test/run-test.log
 **/tmp**
