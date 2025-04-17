@@ -124,11 +124,10 @@
     revision="69ce4703994cdd95d14bc89fe1e3475c4f2be090" />
 
   <!-- meta-aws-iot-automotive-demo -->
-  <remote fetch="https://github.com/adadouche/" name="aws4embeddedlinux-demo" />
+  <remote fetch="https://github.com/aws4embeddedlinux/" name="aws4embeddedlinux-demo" />
   <project name="demo-iot-automotive-embeddedlinux-image" remote="aws4embeddedlinux-demo"
-    upstream="dev-adadouche"
-    path="source-repo-biga/meta-aws-iot-automotive-demo"
-    revision="dev-adadouche">
+    upstream="main"
+    path="source-repo-biga/meta-aws-iot-automotive-demo">
     <linkfile dest="meta-aws-iot-automotive-demo"
       src="source-repo-biga/meta-aws-iot-automotive-demo" />
   </project>
