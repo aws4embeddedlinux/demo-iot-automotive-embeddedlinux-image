@@ -127,6 +127,7 @@
   <remote fetch="https://github.com/aws4embeddedlinux/" name="aws4embeddedlinux-demo" />
   <project name="demo-iot-automotive-embeddedlinux-image" remote="aws4embeddedlinux-demo"
     upstream="main"
+    revision="refs/heads/main"
     path="source-repo-biga/meta-aws-iot-automotive-demo">
     <linkfile dest="meta-aws-iot-automotive-demo"
       src="source-repo-biga/meta-aws-iot-automotive-demo" />
