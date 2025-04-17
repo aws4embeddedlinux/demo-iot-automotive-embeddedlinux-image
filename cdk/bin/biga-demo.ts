@@ -82,6 +82,10 @@ baseImageStack.addDependency(bigaIoTResourcesStack);
 const environmentVariables: {
   [key: string]: codebuild.BuildEnvironmentVariable;
 } = {
+  'SOURCE_REPO_URL': {
+    value: `https://github.com/adadouche/demo-iot-automotive-embeddedlinux-image.git`,
+    type: codebuild.BuildEnvironmentVariableType.PLAINTEXT,
+  },
   'CERTIFICATE_ID': {
     value: `${bigaIoTResourcesStack.certificateId}`,
     type: codebuild.BuildEnvironmentVariableType.PLAINTEXT,

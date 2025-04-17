@@ -1,0 +1,7 @@
+# in case you are building with bitbake locally
+**/.repo
+**/bsp
+**/external
+**/meta-agl*
+**/tmp**
+
