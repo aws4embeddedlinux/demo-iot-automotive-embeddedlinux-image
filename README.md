@@ -2,12 +2,6 @@
 
 This repository wiil create the embedded-linux image, which is used by the [AWS IoT Automotive Cloud](https://github.com/aws4embeddedlinux/demo-iot-automotive-cloud) demo.
 
-## TODO
-
-- Address the AWS CodeCommit deprecation 
-  - use connection ot a GitHub/GitLab?
-  - host a self-managed GitLab?
-
 ### Prerequisites 
 
 This is the list of pre requisites for completing the installation and deployment:

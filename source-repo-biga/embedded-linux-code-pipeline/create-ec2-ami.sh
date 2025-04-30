@@ -169,7 +169,7 @@ echo "Registering AMI with Snapshot $SNAPSHOT_ID with parameters:"
 echo "AMI name: $AMI_NAME"
 more register-ami.json
 AMI_ID=$(aws ec2 register-image \
-    --name "${AMI_NAME}" \
+    --name "${MACHINE_NAME}-${AMI_NAME}" \
     --cli-input-json="file://register-ami.json" \
     --tag-specifications "ResourceType=image,Tags=[{Key=Name,Value=$PIPELINE_PROJECT_NAME},{Key=CreatedBy,Value=$CREATED_BY_TAG},{Key=PipelineProject,Value=$PIPELINE_PROJECT_NAME}]" \
     --query 'ImageId' \
